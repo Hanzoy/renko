@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="renko:war">
+    <output-path>$PROJECT_DIR$/out/artifacts/renko_war</output-path>
+    <root id="archive" name="renko_war.war">
+      <element id="artifact" artifact-name="renko:war exploded" />
+    </root>
+  </artifact>
+</component>
