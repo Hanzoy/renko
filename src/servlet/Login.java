@@ -2,19 +2,18 @@ package servlet;
 
 import bean.admin;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import dao.adminDao;
+import dao.impl.adminDao;
 import utils.Utils;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
 
-@WebServlet("/Login")
+@WebServlet("/login")
 public class Login extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Utils.setRequestAndResponse(request,response);
@@ -31,7 +30,6 @@ public class Login extends HttpServlet {
             map.put("msg","密码错误");
         }
 
-        System.out.println(ad);
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.writeValue(response.getWriter(),map);
     }

@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 
 public class Utils {
@@ -38,4 +40,26 @@ public class Utils {
             e.printStackTrace();
         }
     }
+
+    public int getDateByFormat(String format){
+        SimpleDateFormat sdf = new SimpleDateFormat();
+        if("yyyy".equals(format)||"MM".equals(format)||"dd".equals(format)){
+            sdf.applyPattern(format);
+            return new Integer(sdf.format(new Date()));
+        }else {
+            return -1;
+        }
+    }
+
+    public int getDateByFormat(Date date,String format){
+        SimpleDateFormat sdf = new SimpleDateFormat();
+        if("yyyy".equals(format)||"MM".equals(format)||"dd".equals(format)){
+            sdf.applyPattern(format);
+            return new Integer(sdf.format(date));
+        }else {
+            return -1;
+        }
+    }
+
+
 }
