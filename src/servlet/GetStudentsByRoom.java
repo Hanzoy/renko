@@ -1,6 +1,7 @@
 package servlet;
 
 import bean.admin;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import dao.impl.adminDao;
 import dao.impl.studentDao;
 import utils.Utils;
@@ -22,14 +23,37 @@ public class GetStudentsByRoom extends HttpServlet {
         HashMap<String,Object> map = new HashMap<>();
 
         String uuid = request.getParameter("uuid");
-        admin ad = bean.admin.cipherTextToUser(uuid);
+        String room = request.getParameter("room");
 
-        if(adminDao.login(ad)){
-            List<Map<String,Object>> studentsMap = studentDao.getAllStudents();
-        }else{
-            map.put("status",1);
-            map.put("msg","验证失败");
+        System.out.println(uuid);
+
+        admin ad = null;
+        if(uuid == null || room == null){
+            map.put("status", 2);
+            map.put("msg", "参数不全");
+        }else {
+            ad = admin.cipherTextToUser(uuid);
         }
+
+        System.out.println(ad);
+
+        if(ad == null && room != null){
+            map.put("status", 1);
+            map.put("msg", "验证失败");
+        }else if(adminDao.login(ad)){
+            int interview = 2;
+            if(Utils.isFirstInterview())interview = 1;
+            map.put("status", 0);
+            map.put("interview", interview);
+            map.put("interviewed", studentDao.getStudentsByRoom(room, interview));
+            map.put("noInterview", studentDao.getStudentsByRoom(room, interview-1));
+        }else{
+            map.put("status", 1);
+            map.put("msg", "验证失败");
+        }
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.writeValue(response.getWriter(), map);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

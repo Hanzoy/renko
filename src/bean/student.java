@@ -8,6 +8,8 @@ public class student {
     private String time2;
     private double score1;
     private double score2;
+    private String room;
+    private int status;
 
     @Override
     public String toString() {
@@ -19,10 +21,12 @@ public class student {
                 ", time2='" + time2 + '\'' +
                 ", score1=" + score1 +
                 ", score2=" + score2 +
+                ", room='" + room + '\'' +
+                ", status=" + status +
                 '}';
     }
 
-    public student(int studentId, String name, String aClass, String time1, String time2, double score1, double score2) {
+    public student(int studentId, String name, String aClass, String time1, String time2, double score1, double score2, String room, int status) {
         this.studentId = studentId;
         this.name = name;
         Class = aClass;
@@ -30,6 +34,8 @@ public class student {
         this.time2 = time2;
         this.score1 = score1;
         this.score2 = score2;
+        this.room = room;
+        this.status = status;
     }
 
     public student() {

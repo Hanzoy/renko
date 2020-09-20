@@ -12,10 +12,9 @@ public class otherDao {
     public static JdbcTemplate jdbcTemplate = new JdbcTemplate(JDBCUtils.getDataSource());
 
     public static String queryForOther(String key){
-
         try{
-            String sql = "select value from map where key = ?";
-            String value = jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(String.class), key);
+            String sql = "SELECT thevalue FROM map WHERE thekey = ?";
+            String value = jdbcTemplate.queryForObject(sql,String.class,key);
             return value;
         }catch (DataAccessException e){
             return null;
