@@ -1,7 +1,9 @@
 package servlet;
 
 import bean.admin;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import dao.impl.adminDao;
+import dao.impl.interviewDao;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import utils.Utils;
@@ -29,18 +31,20 @@ public class PutFirstInterview extends HttpServlet {
             admin ad = admin.cipherTextToUser(uuid);
             if(ad != null){
                 if(adminDao.login(ad)){
-                    String studentId = jsonObject.getString("studentId");
-                    String aspect1 = jsonObject.getString("aspect1");
-                    String aspect2 = jsonObject.getString("aspect2");
-                    String aspect3 = jsonObject.getString("aspect3");
-                    String aspect4 = jsonObject.getString("aspect4");
-                    List<String> tag1 = Utils.jsonToList(jsonObject.getJSONArray("tag1"));
-                    List<String> tag2 = Utils.jsonToList(jsonObject.getJSONArray("tag2"));
-                    List<String> tag3 = Utils.jsonToList(jsonObject.getJSONArray("tag3"));
-                    List<String> tag4 = Utils.jsonToList(jsonObject.getJSONArray("tag4"));
+                    int studentId = jsonObject.getInt("studentId");
+                    double aspect1 = jsonObject.getDouble("aspect1");
+                    double aspect2 = jsonObject.getDouble("aspect2");
+                    double aspect3 = jsonObject.getDouble("aspect3");
+                    double aspect4 = jsonObject.getDouble("aspect4");
+                    List<Double> tag1 = Utils.jsonToList(jsonObject.getJSONArray("tag1"));
+                    List<Double> tag2 = Utils.jsonToList(jsonObject.getJSONArray("tag2"));
+                    List<Double> tag3 = Utils.jsonToList(jsonObject.getJSONArray("tag3"));
+                    List<Double> tag4 = Utils.jsonToList(jsonObject.getJSONArray("tag4"));
                     String task = jsonObject.getString("task");
                     String comment = jsonObject.getString("comment");
-
+                    interviewDao.addInterviewOne(ad.getName(), studentId, aspect1, aspect2, aspect3, aspect4, tag1, tag2, tag3, tag4, task, comment);
+                    map.put("status", 0);
+                    map.put("msg", "提交成功");
                 }else{
                     map.put("status", 1);
                     map.put("msg", "验证失败");
@@ -54,6 +58,9 @@ public class PutFirstInterview extends HttpServlet {
             map.put("status", 2);
             map.put("msg", "参数缺失");
         }
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.writeValue(response.getWriter(),map);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

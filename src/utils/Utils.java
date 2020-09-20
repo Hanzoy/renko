@@ -41,7 +41,6 @@ public class Utils {
         String origin = request.getHeader("Origin");
             // 添加白名单 要匹配到请求域名+端口 注意端口号后无斜杠
         response.setHeader("Access-Control-Allow-Origin", origin);
-        System.out.println("origin:"+origin);
             // 跨Cookie
         response.setHeader("Access-Control-Allow-Credentials", "true");
     }
@@ -131,10 +130,10 @@ public class Utils {
         return s.replace('#','+');
     }
 
-    public static List<String> jsonToList(JSONArray jsonArray){
-        List<String> list = new ArrayList<>();
+    public static List<Double> jsonToList(JSONArray jsonArray){
+        List<Double> list = new ArrayList<>();
         for(Object o: jsonArray){
-            list.add((String)o);
+            list.add(Double.valueOf(o.toString()));
         }
         return list;
     }
