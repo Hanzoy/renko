@@ -12,30 +12,30 @@ public class interviewDao {
     public static void addInterviewOne(String interviewer, int studentId, double aspect1, double aspect2, double aspect3, double aspect4, List<Double> tag1, List<Double> tag2, List<Double> tag3, List<Double> tag4, String task, String comment) {
         String sql = "insert into firstInterview(studentId,interviewer,aspect1,aspect2,aspect3,aspect4,task,comment) values(?,?,?,?,?,?,?,?)";
         jdbcTemplate.update(sql,studentId,interviewer,aspect1,aspect2,aspect3,aspect4,task,comment);
-        String sql2 = "insert into tag(studentId,id,tags) values(?,?,?)";
+        String sql2 = "insert into tag(studentId,id) values(?,?)";
         for(Double s: tag1){
-            jdbcTemplate.update(sql2,studentId,s,1);
+            jdbcTemplate.update(sql2,studentId,s);
         }
         for(Double s: tag2){
-            jdbcTemplate.update(sql2,studentId,s,2);
+            jdbcTemplate.update(sql2,studentId,s);
         }
         for(Double s: tag3){
-            jdbcTemplate.update(sql2,studentId,s,3);
+            jdbcTemplate.update(sql2,studentId,s);
         }
         for(Double s: tag4){
-            jdbcTemplate.update(sql2,studentId,s,4);
+            jdbcTemplate.update(sql2,studentId,s);
         }
     }
 
     public static void addInterviewTwo(String interviewer, int studentId, double aspect1, double aspect2, List<Double> tag1, List<Double> tag2, String task, String comment) {
         String sql = "insert into secondInterview(studentId,interviewer,aspect1,aspect2,task,comment) values(?,?,?,?,?,?)";
         jdbcTemplate.update(sql,studentId,interviewer,aspect1,aspect2,task,comment);
-        String sql2 = "insert into tag(studentId,id,tags) values(?,?,?)";
+        String sql2 = "insert into tag(studentId,id) values(?,?)";
         for(Double s: tag1){
-            jdbcTemplate.update(sql2,studentId,s,5);
+            jdbcTemplate.update(sql2,studentId,s);
         }
         for(Double s: tag2){
-            jdbcTemplate.update(sql2,studentId,s,6);
+            jdbcTemplate.update(sql2,studentId,s);
         }
     }
 }
