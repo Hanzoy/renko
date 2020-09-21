@@ -26,4 +26,16 @@ public class interviewDao {
             jdbcTemplate.update(sql2,studentId,s,4);
         }
     }
+
+    public static void addInterviewTwo(String interviewer, int studentId, double aspect1, double aspect2, List<Double> tag1, List<Double> tag2, String task, String comment) {
+        String sql = "insert into secondInterview(studentId,interviewer,aspect1,aspect2,task,comment) values(?,?,?,?,?,?)";
+        jdbcTemplate.update(sql,studentId,interviewer,aspect1,aspect2,task,comment);
+        String sql2 = "insert into tag(studentId,id,tags) values(?,?,?)";
+        for(Double s: tag1){
+            jdbcTemplate.update(sql2,studentId,s,5);
+        }
+        for(Double s: tag2){
+            jdbcTemplate.update(sql2,studentId,s,6);
+        }
+    }
 }
