@@ -71,4 +71,21 @@ public class studentDao {
         }
         return -1;
     }
+    public static double getSecondScores(int studentId){
+        try{
+            String sql1 = "select AVG(aspect1) from firstInterview where studentId = ?";
+            Double aspect1 = jdbcTemplate.queryForObject(sql1, Double.class, studentId);
+            String sql2 = "select AVG(aspect2) from firstInterview where studentId = ?";
+            Double aspect2 = jdbcTemplate.queryForObject(sql2, Double.class, studentId);
+
+            String sql5 = "select * from map where thekey = \"aspect5\" OR thekey = \"aspect6\"";
+            List<Map<String, Object>> hashMap = jdbcTemplate.queryForList(sql5);
+
+            return aspect1*(new Double(hashMap.get(0).get("thevalue").toString()))+aspect2*(new Double(hashMap.get(1).get("thevalue").toString()));
+//            return aspect1;
+        }catch (DataAccessException e){
+            e.printStackTrace();
+        }
+        return -1;
+    }
 }

@@ -3,8 +3,8 @@ package servlet;
 import bean.admin;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dao.impl.adminDao;
+import dao.impl.interviewDao;
 import dao.impl.studentDao;
-import dao.impl.tagDao;
 import utils.Utils;
 
 import javax.servlet.ServletException;
@@ -17,32 +17,28 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@WebServlet("/getStudents")
-public class GetStudents extends HttpServlet {
+@WebServlet("/getStudentById")
+public class GetStudentById extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Utils.setRequestAndResponse(request,response);
         HashMap<String,Object> map = new HashMap<>();
 
         String uuid = request.getParameter("uuid");
+        int studentId =new Integer(request.getParameter("studentId"));
         if(uuid != null){
             admin ad = admin.cipherTextToUser(uuid);
             if(ad != null && adminDao.login(ad)){
-                List<Map<String, Object>> allStudents = studentDao.getAllStudentsSomeAspects();
-                for(Map<String, Object> map1:allStudents){
-                    int studentId = (int) map1.get("studentId");
-                    double firstScores = studentDao.getFirstScores(studentId);
-                    double secondScores = studentDao.getSecondScores(studentId);
-                    map1.put("score1",firstScores);
-                    map1.put("score2",secondScores);
-                }
+                List<Map<String, Object>> interview = interviewDao.getInterview(studentId);
                 map.put("status",0);
-                map.put("students",allStudents);
+                map.put("data",interview);
+                map.put("score1",studentDao.getFirstScores(studentId));
+                map.put("score2",studentDao.getSecondScores(studentId));
             }else{
-                map.put("status",1);
+                map.put("status", 1);
                 map.put("msg","验证失败");
             }
         }else{
-            map.put("status",2);
+            map.put("status", 2);
             map.put("msg","参数不全");
         }
 
