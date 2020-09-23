@@ -88,4 +88,21 @@ public class studentDao {
         }
         return -1;
     }
+
+    public static void setFirstTime(List<Double> studentIds, String time){
+        try{
+            String sql = "";//todo 修改sql语句
+
+        }catch (DataAccessException e){
+
+        }
+    }
+    public static void setTSecondTime(List<Double> studentIds, String time){
+        try{
+            String sql = "";//todo 修改sql语句
+
+        }catch (DataAccessException e){
+
+        }
+    }
 }

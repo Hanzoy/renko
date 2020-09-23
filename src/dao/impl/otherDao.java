@@ -20,4 +20,16 @@ public class otherDao {
             return null;
         }
     }
+
+    public static void setFirstWeight(int aspect1, int aspect2, int aspect3, int aspect4){
+        try{
+            String sql1 = "";
+            String sql2 = "";
+            String sql3 = "";
+            String sql4 = "";
+//todo 修改每一个
+        }catch (DataAccessException e){
+
+        }
+    }
 }
