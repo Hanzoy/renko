@@ -43,15 +43,22 @@ public class interviewDao {
     }
 
     public static List<Map<String,Object>> getInterview(int studentId){
-        try{
+        List<Map<String, Object>> firstView = null;
+        List<Map<String, Object>> secondView = null;
+        List<Integer> tags = null;
+        try {
             String sql1 = "select * from firstInterview where studentId = ?";
-            Map<String, Object> firstView = jdbcTemplate.queryForMap(sql1, studentId);
+            firstView = jdbcTemplate.queryForList(sql1, studentId);
+        }catch (DataAccessException ignored) {
+        }try {
             String sql2 = "select * from secondInterview where studentId = ?";
-            Map<String, Object> secondView = jdbcTemplate.queryForMap(sql2, studentId);
-
+            secondView = jdbcTemplate.queryForList(sql2, studentId);
+        }catch (DataAccessException e){
+        }try {
             String sql3 = "select id from tag where studentId = ?";
-            List<Integer> tags = jdbcTemplate.queryForList(sql3, Integer.class, studentId);
-
+            tags = jdbcTemplate.queryForList(sql3, Integer.class, studentId);
+        }catch (DataAccessException e) {
+        }try{
             List<Integer> tag1 = new ArrayList<>();
             List<Integer> tag2 = new ArrayList<>();
             List<Integer> tag3 = new ArrayList<>();
@@ -83,16 +90,13 @@ public class interviewDao {
                         break;
                 }
             }
-            firstView.put("tag1",tag1);
-            firstView.put("tag2",tag2);
-            firstView.put("tag3",tag3);
-            firstView.put("tag4",tag4);
-            secondView.put("tag1",tag5);
-            secondView.put("tag2",tag6);
-            List<Map<String,Object>> list = new ArrayList<>();
-            list.add(firstView);
-            list.add(secondView);
-            return list;
+            firstView.get(0).put("tag1",tag1);
+            firstView.get(1).put("tag2",tag2);
+            firstView.get(2).put("tag3",tag3);
+            firstView.get(3).put("tag4",tag4);
+            secondView.get(0).put("tag1",tag5);
+            secondView.get(1).put("tag2",tag6);
+            return firstView;
         }catch (DataAccessException e){
             System.out.println("学号不正确");
         }
