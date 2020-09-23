@@ -6,6 +6,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import utils.Utils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -42,7 +43,7 @@ public class interviewDao {
         }
     }
 
-    public static List<Map<String,Object>> getInterview(int studentId){
+    public static Map<String, Object> getInterview(int studentId){
         List<Map<String, Object>> firstView = null;
         List<Map<String, Object>> secondView = null;
         List<Integer> tags = null;
@@ -90,13 +91,16 @@ public class interviewDao {
                         break;
                 }
             }
-            firstView.get(0).put("tag1",tag1);
-            firstView.get(1).put("tag2",tag2);
-            firstView.get(2).put("tag3",tag3);
-            firstView.get(3).put("tag4",tag4);
-            secondView.get(0).put("tag1",tag5);
-            secondView.get(1).put("tag2",tag6);
-            return firstView;
+            Map<String, Object> map = new HashMap<>();
+            map.put("firstInterview",firstView);
+            map.put("secondInterview",secondView);
+            map.put("firstTag1",tag1);
+            map.put("firstTag2",tag2);
+            map.put("firstTag3",tag3);
+            map.put("firstTag4",tag4);
+            map.put("secondTag1",tag5);
+            map.put("secondTag2",tag6);
+            return map;
         }catch (DataAccessException e){
             System.out.println("学号不正确");
         }
