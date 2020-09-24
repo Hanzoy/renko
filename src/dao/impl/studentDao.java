@@ -91,16 +91,20 @@ public class studentDao {
 
     public static void setFirstTime(List<Double> studentIds, String time){
         try{
-            String sql = "";//todo 修改sql语句
-
+            String sql = "UPDATE students SET time1 = ? WHERE studentId = ?";
+            for(double id : studentIds){
+                jdbcTemplate.update(sql,time,(int)id);
+            }
         }catch (DataAccessException e){
 
         }
     }
     public static void setTSecondTime(List<Double> studentIds, String time){
         try{
-            String sql = "";//todo 修改sql语句
-
+            String sql = "UPDATE students SET time2 = ? WHERE studentId = ?";
+            for(double id : studentIds){
+                jdbcTemplate.update(sql,time,(int)id);
+            }
         }catch (DataAccessException e){
 
         }

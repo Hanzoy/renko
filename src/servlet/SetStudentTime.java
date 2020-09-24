@@ -24,14 +24,19 @@ public class SetStudentTime extends HttpServlet {
         HashMap<String,Object> map = new HashMap<>();
 
         String jsonString = Utils.getJsonString(request);
+
         JSONObject jsonObject = new JSONObject(jsonString);
         String uuid = jsonObject.getString("uuid");
+
+        System.out.println(jsonString);
+        System.out.println(jsonObject);
 
         if(uuid!=null){
             admin ad = admin.cipherTextToUser(uuid);
             if(ad != null){
                 if(adminDao.login(ad)){
                     List<Double> studentIds = Utils.jsonToList(jsonObject.getJSONArray("studentId"));
+                    System.out.println(studentIds);
                     String time = jsonObject.getString("time");
                     int interview = jsonObject.getInt("interview");
                     if(interview == 1){

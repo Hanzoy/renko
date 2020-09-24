@@ -21,13 +21,26 @@ public class otherDao {
         }
     }
 
-    public static void setFirstWeight(int aspect1, int aspect2, int aspect3, int aspect4){
+    public static void setFirstWeight(double aspect1, double aspect2, double aspect3, double aspect4){
         try{
-            String sql1 = "";
-            String sql2 = "";
-            String sql3 = "";
-            String sql4 = "";
-//todo 修改每一个
+            String sql1 = "UPDATE map SET thevalue = ? WHERE thekey = \'aspect1\'";
+            String sql2 = "UPDATE map SET thevalue = ? WHERE thekey = \'aspect2\'";
+            String sql3 = "UPDATE map SET thevalue = ? WHERE thekey = \'aspect3\'";
+            String sql4 = "UPDATE map SET thevalue = ? WHERE thekey = \'aspect4\'";
+            jdbcTemplate.update(sql1,aspect1);
+            jdbcTemplate.update(sql2,aspect2);
+            jdbcTemplate.update(sql3,aspect3);
+            jdbcTemplate.update(sql4,aspect4);
+        }catch (DataAccessException e){
+
+        }
+    }
+    public static void setSecondWeight(double aspect1, double aspect2){
+        try{
+            String sql1 = "UPDATE map SET thevalue = ? WHERE thekey = \'aspect5\'";
+            String sql2 = "UPDATE map SET thevalue = ? WHERE thekey = \'aspect6\'";
+            jdbcTemplate.update(sql1,aspect1);
+            jdbcTemplate.update(sql2,aspect2);
         }catch (DataAccessException e){
 
         }

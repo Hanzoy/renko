@@ -3,6 +3,7 @@ package servlet;
 import bean.admin;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dao.impl.adminDao;
+import dao.impl.otherDao;
 import dao.impl.tagDao;
 import utils.Utils;
 
@@ -48,15 +49,19 @@ public class SetWeight extends HttpServlet {
                 if(ad != null && adminDao.login(ad)){
                     int coo = new Integer(interview);
                     if(coo == 1){
-                        if(new Integer(aspect1) + new Integer(aspect2) + new Integer(aspect3) + new Integer(aspect4) == 1){
-
+                        if(new Double(aspect1) + new Double(aspect2) + new Double(aspect3) + new Double(aspect4) == 1){
+                            otherDao.setFirstWeight(new Double(aspect1), new Double(aspect2), new Double(aspect3), new Double(aspect4));
+                            map.put("status",0);
+                            map.put("msg","修改成功");
                         }else{
                             map.put("status",3);
                             map.put("msg","参数不合法");
                         }
                     }else if(coo == 2){
-                        if(new Integer(aspect1) + new Integer(aspect2) == 1){
-
+                        if(new Double(aspect1) + new Double(aspect2) == 1){
+                            otherDao.setSecondWeight(new Double(aspect1), new Double(aspect2));
+                            map.put("status",0);
+                            map.put("msg","修改成功");
                         }else{
                             map.put("status",3);
                             map.put("msg","参数不合法");
