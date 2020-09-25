@@ -30,7 +30,8 @@ public class GetStudentById extends HttpServlet {
             if(ad != null && adminDao.login(ad)){
                 Map<String, Object> interview = interviewDao.getInterview(studentId);
                 map.put("status",0);
-                map.put("data",interview);
+                map.put("firstView",interview.get("firstView"));
+                map.put("secondView",interview.get("secondView"));
                 map.put("score1",studentDao.getFirstScores(studentId));
                 map.put("score2",studentDao.getSecondScores(studentId));
             }else{

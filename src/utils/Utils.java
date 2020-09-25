@@ -1,5 +1,6 @@
 package utils;
 
+import com.sun.javaws.IconUtil;
 import dao.impl.otherDao;
 import org.apache.commons.beanutils.BeanUtils;
 import org.json.JSONArray;
@@ -35,14 +36,20 @@ public class Utils {
 
         }
         response.setCharacterEncoding("utf-8");
-        response.setHeader("content-type","text/html;charset=utf-8");
-        response.setContentType("text/html;charset=utf-8");
+        response.setHeader("content-type","application/json;charset=utf-8");
+        response.setContentType("application/json;charset=utf-8");
 
         String origin = request.getHeader("Origin");
-            // 添加白名单 要匹配到请求域名+端口 注意端口号后无斜杠
-        response.setHeader("Access-Control-Allow-Origin", origin);
+//            // 添加白名单 要匹配到请求域名+端口 注意端口号后无斜杠
+//        response.setHeader("Access-Control-Allow-Origin",origin);
             // 跨Cookie
         response.setHeader("Access-Control-Allow-Credentials", "true");
+//
+        response.setHeader("Access-Control-Allow-Origin","*");
+        response.setHeader("Access-Control-Allow-Headers", "*");
+        response.setHeader("Access-Control-Allow-Methods","*");
+
+        System.out.println(origin);
     }
 
     /**

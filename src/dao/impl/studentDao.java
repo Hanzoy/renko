@@ -52,6 +52,7 @@ public class studentDao {
 
     public static double getFirstScores(int studentId){
         try{
+            System.out.println("getFirstScores\n");
             String sql1 = "select AVG(aspect1) from firstInterview where studentId = ?";
             Double aspect1 = jdbcTemplate.queryForObject(sql1, Double.class, studentId);
             String sql2 = "select AVG(aspect2) from firstInterview where studentId = ?";
@@ -63,11 +64,13 @@ public class studentDao {
 
             String sql5 = "select * from map where thekey = \"aspect1\" OR thekey = \"aspect2\" OR thekey = \"aspect3\" OR thekey = \"aspect4\"";
             List<Map<String, Object>> hashMap = jdbcTemplate.queryForList(sql5);
-
+            System.out.println(aspect1+"\n"+aspect2+"\n"+aspect3+"\n"+aspect4+"\n"+hashMap);
+            if(aspect1 == null || aspect2 == null || aspect3 == null || aspect4 == null || hashMap == null) return 0;
             return aspect1*(new Double(hashMap.get(0).get("thevalue").toString()))+aspect2*(new Double(hashMap.get(1).get("thevalue").toString()))+aspect3*(new Double(hashMap.get(2).get("thevalue").toString()))+aspect4*(new Double(hashMap.get(3).get("thevalue").toString()));
 //            return aspect1;
         }catch (DataAccessException e){
             e.printStackTrace();
+            System.out.println("错误");
         }
         return -1;
     }
@@ -80,6 +83,9 @@ public class studentDao {
 
             String sql5 = "select * from map where thekey = \"aspect5\" OR thekey = \"aspect6\"";
             List<Map<String, Object>> hashMap = jdbcTemplate.queryForList(sql5);
+
+
+            if(aspect1 == null || aspect2 == null || hashMap == null) return 0;
 
             return aspect1*(new Double(hashMap.get(0).get("thevalue").toString()))+aspect2*(new Double(hashMap.get(1).get("thevalue").toString()));
 //            return aspect1;
