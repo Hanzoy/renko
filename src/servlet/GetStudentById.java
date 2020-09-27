@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import dao.impl.adminDao;
 import dao.impl.interviewDao;
 import dao.impl.studentDao;
+import org.json.JSONObject;
 import utils.Utils;
 
 import javax.servlet.ServletException;
@@ -23,8 +24,10 @@ public class GetStudentById extends HttpServlet {
         Utils.setRequestAndResponse(request,response);
         HashMap<String,Object> map = new HashMap<>();
 
-        String uuid = request.getParameter("uuid");
-        int studentId =new Integer(request.getParameter("studentId"));
+        String jsonString = Utils.getJsonString(request);
+        JSONObject jsonObject = new JSONObject(jsonString);
+        String uuid = jsonObject.getString("uuid");
+        int studentId = jsonObject.getInt("studentId");
         if(uuid != null){
             admin ad = admin.cipherTextToUser(uuid);
             if(ad != null && adminDao.login(ad)){

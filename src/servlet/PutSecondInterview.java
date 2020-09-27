@@ -52,7 +52,6 @@ public class PutSecondInterview extends HttpServlet {
             map.put("status", 2);
             map.put("msg", "参数缺失");
         }
-
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.writeValue(response.getWriter(), map);
     }

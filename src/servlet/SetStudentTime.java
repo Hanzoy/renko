@@ -28,9 +28,6 @@ public class SetStudentTime extends HttpServlet {
         JSONObject jsonObject = new JSONObject(jsonString);
         String uuid = jsonObject.getString("uuid");
 
-        System.out.println(jsonString);
-        System.out.println(jsonObject);
-
         if(uuid!=null){
             admin ad = admin.cipherTextToUser(uuid);
             if(ad != null){

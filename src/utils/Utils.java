@@ -49,7 +49,6 @@ public class Utils {
         response.setHeader("Access-Control-Allow-Headers", "*");
         response.setHeader("Access-Control-Allow-Methods","*");
 
-        System.out.println(origin);
     }
 
     /**

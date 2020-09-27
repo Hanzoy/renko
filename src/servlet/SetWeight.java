@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import dao.impl.adminDao;
 import dao.impl.otherDao;
 import dao.impl.tagDao;
+import org.json.JSONObject;
 import utils.Utils;
 
 import javax.servlet.ServletException;
@@ -21,25 +22,35 @@ public class SetWeight extends HttpServlet {
         Utils.setRequestAndResponse(request,response);
         HashMap<String,Object> map = new HashMap<>();
 
-        String uuid = request.getParameter("uuid");
-        String interview = request.getParameter("interview");
-        if(uuid != null && interview != null){
+        String jsonString = Utils.getJsonString(request);
+        JSONObject jsonObject = new JSONObject(jsonString);
+
+        System.out.println("jsonString:"+jsonString);
+
+        String uuid = jsonObject.getString("uuid");
+
+        System.out.println("uuid: "+uuid);
+
+        int interview = jsonObject.getInt("interview");
+
+        System.out.println("interview:"+interview);
+        if(uuid != null){
             String aspect1 = null;
             String aspect2 = null;
             String aspect3 = null;
             String aspect4 = null;
             boolean hasEnoughParameter = true;
-            if(new Integer(interview).equals(1)){
-                aspect1 = request.getParameter("aspect1");
-                aspect2 = request.getParameter("aspect2");
-                aspect3 = request.getParameter("aspect3");
-                aspect4 = request.getParameter("aspect4");
+            if(interview == 1){
+                aspect1 = jsonObject.getString("aspect1");
+                aspect2 = jsonObject.getString("aspect2");
+                aspect3 = jsonObject.getString("aspect3");
+                aspect4 = jsonObject.getString("aspect4");
                 if(aspect1 == null ||aspect2 == null ||aspect3 == null ||aspect4 == null){
                     hasEnoughParameter = false;
                 }
-            }else if(new Integer(interview).equals(2)){
-                aspect1 = request.getParameter("aspect1");
-                aspect2 = request.getParameter("aspect2");
+            }else if(interview == 2){
+                aspect1 = jsonObject.getString("aspect1");
+                aspect2 = jsonObject.getString("aspect2");
                 if(aspect1 == null ||aspect2 == null){
                     hasEnoughParameter = false;
                 }
@@ -47,8 +58,7 @@ public class SetWeight extends HttpServlet {
             if(hasEnoughParameter){
                 admin ad = admin.cipherTextToUser(uuid);
                 if(ad != null && adminDao.login(ad)){
-                    int coo = new Integer(interview);
-                    if(coo == 1){
+                    if(interview == 1){
                         if(new Double(aspect1) + new Double(aspect2) + new Double(aspect3) + new Double(aspect4) == 1){
                             otherDao.setFirstWeight(new Double(aspect1), new Double(aspect2), new Double(aspect3), new Double(aspect4));
                             map.put("status",0);
@@ -57,7 +67,7 @@ public class SetWeight extends HttpServlet {
                             map.put("status",3);
                             map.put("msg","参数不合法");
                         }
-                    }else if(coo == 2){
+                    }else if(interview == 2){
                         if(new Double(aspect1) + new Double(aspect2) == 1){
                             otherDao.setSecondWeight(new Double(aspect1), new Double(aspect2));
                             map.put("status",0);

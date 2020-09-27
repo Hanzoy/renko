@@ -4,6 +4,7 @@ import bean.admin;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dao.impl.adminDao;
 import dao.impl.studentDao;
+import org.json.JSONObject;
 import utils.Utils;
 
 import javax.servlet.ServletException;
@@ -22,8 +23,10 @@ public class GetStudentsByRoom extends HttpServlet {
         Utils.setRequestAndResponse(request,response);
         HashMap<String,Object> map = new HashMap<>();
 
-        String uuid = request.getParameter("uuid");
-        String room = request.getParameter("room");
+        String jsonString = Utils.getJsonString(request);
+        JSONObject jsonObject = new JSONObject(jsonString);
+        String uuid = jsonObject.getString("uuid");
+        String room = jsonObject.getString("room");
 
         System.out.println(uuid);
 
