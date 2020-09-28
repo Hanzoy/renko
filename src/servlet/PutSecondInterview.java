@@ -4,6 +4,7 @@ import bean.admin;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dao.impl.adminDao;
 import dao.impl.interviewDao;
+import org.json.JSONException;
 import org.json.JSONObject;
 import utils.Utils;
 
@@ -32,10 +33,26 @@ public class PutSecondInterview extends HttpServlet {
                     int studentId = jsonObject.getInt("studentId");
                     double aspect1 = jsonObject.getDouble("aspect1");
                     double aspect2 = jsonObject.getDouble("aspect2");
-                    String tag1 = jsonObject.getString("tag1");
-                    String tag2 = jsonObject.getString("tag2");
-                    String task = jsonObject.getString("task");
-                    String comment = jsonObject.getString("comment");
+                    String tag1 = "";
+                    String tag2 = "";
+                    String task = "";
+                    String comment = "";
+                    try {
+                        tag1 = jsonObject.getString("tag1");
+                    }catch (JSONException ignored){
+                    }
+                    try {
+                        tag2 = jsonObject.getString("tag2");
+                    }catch (JSONException ignored){
+                    }
+                    try {
+                        task = jsonObject.getString("task");
+                    }catch (JSONException ignored){
+                    }
+                    try {
+                        comment = jsonObject.getString("comment");
+                    }catch (JSONException ignored){
+                    }
                     interviewDao.addInterviewTwo(ad.getName(), studentId, aspect1, aspect2, tag1, tag2, task, comment);
                     map.put("status", 0);
                     map.put("msg", "提交成功");

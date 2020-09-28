@@ -25,15 +25,9 @@ public class SetWeight extends HttpServlet {
         String jsonString = Utils.getJsonString(request);
         JSONObject jsonObject = new JSONObject(jsonString);
 
-        System.out.println("jsonString:"+jsonString);
-
         String uuid = jsonObject.getString("uuid");
 
-        System.out.println("uuid: "+uuid);
-
         int interview = jsonObject.getInt("interview");
-
-        System.out.println("interview:"+interview);
         if(uuid != null){
             String aspect1 = null;
             String aspect2 = null;

@@ -17,6 +17,8 @@ public class interviewDao {
         if (!checkFirstExist(interviewer, studentId)) {
             String sql = "insert into firstInterview(studentId, interviewer, aspect1, aspect2, aspect3, aspect4, task, comment, tag1, tag2, tag3, tag4) values(?,?,?,?,?,?,?,?,?,?,?,?)";
             jdbcTemplate.update(sql, studentId, interviewer, aspect1, aspect2, aspect3, aspect4, task, comment, tag1, tag2, tag3, tag4);
+            String sql2 = "UPDATE students SET status = ? WHERE studentId = ?";
+            jdbcTemplate.update(sql2,1,studentId);
         }else{
             String sql = "UPDATE firstInterview SET aspect1 = ?, aspect2 = ?, aspect3 = ?, aspect4 = ?, task = ?, comment = ?, tag1 = ?, tag2 = ?, tag3 = ?, tag4 = ? WHERE studentId = ? AND interviewer = ?";
             jdbcTemplate.update(sql, aspect1, aspect2, aspect3, aspect4, task, comment, tag1, tag2, tag3, tag4, studentId, interviewer);
@@ -29,6 +31,8 @@ public class interviewDao {
         if(!checkSecondExist(interviewer,studentId)){
             String sql = "insert into secondInterview(studentId, interviewer, aspect1, aspect2, task, comment, tag1, tag2) values(?,?,?,?,?,?,?,?)";
             jdbcTemplate.update(sql, studentId, interviewer, aspect1, aspect2, task, comment, tag1, tag2);
+            String sql2 = "UPDATE students SET status = ? WHERE studentId = ?";
+            jdbcTemplate.update(sql2,2,studentId);
         }else{
             String sql = "UPDATE secondInterview SET aspect1 = ?, aspect2 = ?, task = ?, comment = ?, tag1 = ?, tag2 = ? WHERE studentId = ? AND interviewer = ?";
             jdbcTemplate.update(sql, aspect1, aspect2, task, comment, tag1, tag2, studentId, interviewer);

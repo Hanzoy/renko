@@ -26,9 +26,8 @@ public class GetStudentsByRoom extends HttpServlet {
         String jsonString = Utils.getJsonString(request);
         JSONObject jsonObject = new JSONObject(jsonString);
         String uuid = jsonObject.getString("uuid");
-        String room = jsonObject.getString("room");
+        String room = jsonObject.get("room").toString();
 
-        System.out.println(uuid);
 
         admin ad = null;
         if(uuid == null || room == null){
@@ -37,8 +36,6 @@ public class GetStudentsByRoom extends HttpServlet {
         }else {
             ad = admin.cipherTextToUser(uuid);
         }
-
-        System.out.println(ad);
 
         if(ad == null && room != null){
             map.put("status", 1);

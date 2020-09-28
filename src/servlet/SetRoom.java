@@ -3,7 +3,7 @@ package servlet;
 import bean.admin;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dao.impl.adminDao;
-import dao.impl.interviewDao;
+import dao.impl.otherDao;
 import dao.impl.studentDao;
 import org.json.JSONObject;
 import utils.Utils;
@@ -17,15 +17,15 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
-@WebServlet("/setStudentTime")
-public class SetStudentTime extends HttpServlet {
+@WebServlet("/setRoom")
+public class SetRoom extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Utils.setRequestAndResponse(request,response);
         HashMap<String,Object> map = new HashMap<>();
 
         String jsonString = Utils.getJsonString(request);
-
         JSONObject jsonObject = new JSONObject(jsonString);
+
         String uuid = jsonObject.getString("uuid");
 
         if(uuid!=null){
@@ -33,13 +33,8 @@ public class SetStudentTime extends HttpServlet {
             if(ad != null){
                 if(adminDao.login(ad)){
                     List<Double> studentIds = Utils.jsonToList(jsonObject.getJSONArray("studentId"));
-                    String time = jsonObject.getString("time");
-                    int interview = jsonObject.getInt("interview");
-                    if(interview == 1){
-                        studentDao.setFirstTime(studentIds,time);
-                    }else if(interview == 2){
-                        studentDao.setTSecondTime(studentIds,time);
-                    }
+                    int room = new Integer(jsonObject.get("room").toString()) ;
+                    studentDao.setStudentsRoom(studentIds,room);
                     map.put("status", 0);
                     map.put("msg", "提交成功");
                 }else{

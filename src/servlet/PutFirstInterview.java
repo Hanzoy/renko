@@ -4,6 +4,7 @@ import bean.admin;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dao.impl.adminDao;
 import dao.impl.interviewDao;
+import org.json.JSONException;
 import org.json.JSONObject;
 import utils.Utils;
 
@@ -38,12 +39,36 @@ public class PutFirstInterview extends HttpServlet {
 //                    List<Double> tag2 = Utils.jsonToList(jsonObject.getJSONArray("tag2"));
 //                    List<Double> tag3 = Utils.jsonToList(jsonObject.getJSONArray("tag3"));
 //                    List<Double> tag4 = Utils.jsonToList(jsonObject.getJSONArray("tag4"));
-                    String tag1 = jsonObject.getString("tag1");
-                    String tag2 = jsonObject.getString("tag2");
-                    String tag3 = jsonObject.getString("tag3");
-                    String tag4 = jsonObject.getString("tag4");
-                    String task = jsonObject.getString("task");
-                    String comment = jsonObject.getString("comment");
+                    String tag1 = "";
+                    String tag2 = "";
+                    String tag3 = "";
+                    String tag4 = "";
+                    String task = "";
+                    String comment = "";
+                    try {
+                        tag1 = jsonObject.getString("tag1");
+                    }catch (JSONException ignored){
+                    }
+                    try {
+                        tag2 = jsonObject.getString("tag2");
+                    }catch (JSONException ignored){
+                    }
+                    try {
+                        tag3 = jsonObject.getString("tag3");
+                    }catch (JSONException ignored){
+                    }
+                    try {
+                        tag4 = jsonObject.getString("tag4");
+                    }catch (JSONException ignored){
+                    }
+                    try {
+                        task = jsonObject.getString("task");
+                    }catch (JSONException ignored){
+                    }
+                    try {
+                        comment = jsonObject.getString("comment");
+                    }catch (JSONException ignored){
+                    }
                     interviewDao.addInterviewOne(ad.getName(), studentId, aspect1, aspect2, aspect3, aspect4, tag1, tag2, tag3, tag4, task, comment);
                     map.put("status", 0);
                     map.put("msg", "提交成功");

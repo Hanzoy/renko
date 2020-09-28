@@ -19,6 +19,5 @@ public class test {
 
             String sql5 = "select * from map where thekey = \"aspect1\" OR thekey = \"aspect2\" OR thekey = \"aspect3\" OR thekey = \"aspect4\"";
             List<Map<String, Object>> hashMap = jdbcTemplate.queryForList(sql5);
-            System.out.println(hashMap);
     }
 }
