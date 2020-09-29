@@ -4,6 +4,7 @@ import bean.admin;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dao.impl.adminDao;
 import dao.impl.otherDao;
+import dao.impl.studentDao;
 import dao.impl.tagDao;
 import org.json.JSONObject;
 import utils.Utils;
@@ -15,6 +16,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @WebServlet("/setWeight")
 public class SetWeight extends HttpServlet {
@@ -57,6 +60,12 @@ public class SetWeight extends HttpServlet {
                             otherDao.setFirstWeight(new Double(aspect1), new Double(aspect2), new Double(aspect3), new Double(aspect4));
                             map.put("status",0);
                             map.put("msg","修改成功");
+
+                            List<Map<String, Object>> allStudentsId = studentDao.getAllStudentsId();
+                            for(Map<String, Object> map1 : allStudentsId){
+                                int studentId = (int) map1.get("studentId");
+                                studentDao.updateScore(studentId);
+                            }
                         }else{
                             map.put("status",3);
                             map.put("msg","参数不合法");

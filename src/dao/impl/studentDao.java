@@ -23,7 +23,7 @@ public class studentDao {
 
     public static List<Map<String,Object>> getAllStudentsSomeAspects(){
         try{
-            String sql = "select studentId, name, class, time1, time2, room  from students";
+            String sql = "select studentId, name, class, time1, time2, room, score1, score2  from students";
             List<Map<String, Object>> map = jdbcTemplate.queryForList(sql);
             return map;
         }catch (DataAccessException e){
@@ -91,6 +91,7 @@ public class studentDao {
         }
         return -1;
     }
+
     public static double getSecondScores(int studentId){
         try{
             String sql1 = "select AVG(aspect1) from secondInterview where studentId = ?";
@@ -150,6 +151,27 @@ public class studentDao {
             jdbcTemplate.update(sql,studentId,name,Class,0);
         }catch (DataAccessException e){
 
+        }
+    }
+
+    public static void updateScore(int studentId){
+        double firstScores = studentDao.getFirstScores(studentId);
+        double secondScores = studentDao.getSecondScores(studentId);
+        try{
+            String sql = "update students SET score1 = ?, score2 = ? WHERE studentId = ?";
+            jdbcTemplate.update(sql, firstScores, secondScores, studentId);
+        }catch (DataAccessException e){
+
+        }
+    }
+
+    public static List<Map<String, Object>> getAllStudentsId(){
+
+        try{
+            String sql = "select studentId from students";
+            return jdbcTemplate.queryForList(sql);
+        }catch (DataAccessException e){
+            return null;
         }
     }
 }

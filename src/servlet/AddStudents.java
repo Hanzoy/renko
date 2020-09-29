@@ -30,7 +30,23 @@ public class AddStudents extends HttpServlet {
         JSONArray stdDataArr = jsonObject.getJSONArray("stdDataArr");
         for(int i=0; i<stdDataArr.length(); i++){
             JSONObject json = stdDataArr.getJSONObject(i);
-            studentDao.addStudent(json.getInt("stdName"), json.getString("stdName"), json.getString("major")+json.getString("classNum"));
+//            if(json.getString("organizationFirst").equals("学生创新实践中心科技发展部")) {
+//                studentDao.addStudent(json.getInt("stdId"), json.getString("stdName"), json.getString("major") + json.getString("classNum"));
+//            }else{
+//                String second = null;
+//                try{
+//                    second = json.getString("organizationSecond");
+//                }catch (JSONException e){
+//
+//                }
+//                if("学生创新实践中心科技发展部".equals(second)){
+//                    studentDao.addStudent(json.getInt("stdId"), json.getString("stdName"), json.getString("major") + json.getString("classNum"));
+//                }
+//
+//            }
+            if(json.getString("branchFirst").equals("技术组")){
+                studentDao.addStudent(json.getInt("stdId"), json.getString("stdName"), json.getString("major") + json.getString("classNum"));
+            }
         }
 
         map.put("status", 0);

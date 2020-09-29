@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +25,8 @@ public class GetStudents extends HttpServlet {
         Utils.setRequestAndResponse(request,response);
         HashMap<String,Object> map = new HashMap<>();
 
+        Date date = new Date();
+
         String jsonString = Utils.getJsonString(request);
         JSONObject jsonObject = new JSONObject(jsonString);
         String uuid = jsonObject.getString("uuid");
@@ -31,13 +34,13 @@ public class GetStudents extends HttpServlet {
             admin ad = admin.cipherTextToUser(uuid);
             if(ad != null && adminDao.login(ad)){
                 List<Map<String, Object>> allStudents = studentDao.getAllStudentsSomeAspects();
-                for(Map<String, Object> map1:allStudents){
-                    int studentId = (int) map1.get("studentId");
-                    double firstScores = studentDao.getFirstScores(studentId);
-                    double secondScores = studentDao.getSecondScores(studentId);
-                    map1.put("score1",firstScores);
-                    map1.put("score2",secondScores);
-                }
+//                for(Map<String, Object> map1:allStudents){
+//                    int studentId = (int) map1.get("studentId");
+//                    double firstScores = studentDao.getFirstScores(studentId);
+//                    double secondScores = studentDao.getSecondScores(studentId);
+//                    map1.put("score1",firstScores);
+//                    map1.put("score2",secondScores);
+//                }
                 map.put("status",0);
                 map.put("students",allStudents);
             }else{
@@ -48,6 +51,10 @@ public class GetStudents extends HttpServlet {
             map.put("status",2);
             map.put("msg","参数不全");
         }
+
+        Date date1 = new Date();
+
+        System.out.println(date1.getTime() - date.getTime());
 
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.writeValue(response.getWriter(), map);

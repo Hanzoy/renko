@@ -4,6 +4,7 @@ import bean.admin;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dao.impl.adminDao;
 import dao.impl.interviewDao;
+import dao.impl.studentDao;
 import org.json.JSONException;
 import org.json.JSONObject;
 import utils.Utils;
@@ -54,6 +55,7 @@ public class PutSecondInterview extends HttpServlet {
                     }catch (JSONException ignored){
                     }
                     interviewDao.addInterviewTwo(ad.getName(), studentId, aspect1, aspect2, tag1, tag2, task, comment);
+                    studentDao.updateScore(studentId);
                     map.put("status", 0);
                     map.put("msg", "提交成功");
                 } else {

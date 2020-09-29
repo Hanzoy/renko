@@ -31,13 +31,13 @@ public class SearchStudent extends HttpServlet {
             admin ad = admin.cipherTextToUser(uuid);
             if(ad != null && adminDao.login(ad)){
                 List<Map<String, Object>> allStudents = studentDao.getAllStudentsBySomeKeyWorld(keyWorld);
-                for(Map<String, Object> map1:allStudents){
-                    int studentId = (int) map1.get("studentId");
-                    double firstScores = studentDao.getFirstScores(studentId);
-                    double secondScores = studentDao.getSecondScores(studentId);
-                    map1.put("score1",firstScores);
-                    map1.put("score2",secondScores);
-                }
+//                for(Map<String, Object> map1:allStudents){
+//                    int studentId = (int) map1.get("studentId");
+//                    double firstScores = studentDao.getFirstScores(studentId);
+//                    double secondScores = studentDao.getSecondScores(studentId);
+//                    map1.put("score1",firstScores);
+//                    map1.put("score2",secondScores);
+//                }
                 map.put("status",0);
                 map.put("students",allStudents);
             }else{
