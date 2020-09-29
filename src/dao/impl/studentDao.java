@@ -42,7 +42,7 @@ public class studentDao {
 //    }
     public static List<Map<String,Object>> getAllStudentsBySomeKeyWorld(String keyWorld){
         try{
-            String sql = "select studentId, name, class, time1, time2  from students where studentId like ? OR name like ?";
+            String sql = "select studentId, name, class, time1, time2, room  from students where studentId like ? OR name like ?";
             List<Map<String, Object>> map = jdbcTemplate.queryForList(sql, "%"+keyWorld+"%", "%"+keyWorld+"%");
             return map;
         }catch (DataAccessException e){
