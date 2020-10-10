@@ -61,7 +61,7 @@ public class studentDao {
 
     public static List<Map<String,Object>> getStudentsByRoom(String room,int status){
         try{
-            String sql = "select * from students where room = ? AND status = ?";
+            String sql = "select * from students where room = ? AND status = ? order by time1";
             List<Map<String, Object>> map = jdbcTemplate.queryForList(sql,room,status);
             return map;
         }catch (DataAccessException e){
